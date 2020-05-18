@@ -1,0 +1,81 @@
+---
+title: My Tastes
+output: 
+  flexdashboard::flex_dashboard:
+    vertical_layout: scroll
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+source('setup.R')
+
+```
+
+Danceability {data-orientation=rows}
+================================================================================
+
+
+Row {data-height=500}
+--------------------------------------------------------------
+
+### dist {.no-title}
+
+```{r}
+feature_charts[[feature]]
+```
+
+
+
+Row {data-height=200}
+--------------------------------------------------------------------------------
+
+
+### Least danceable track
+
+```{r}
+track <- track_features$id[which.min(track_features[[feature]])]
+track <- my_top_tracks %>% filter(id == track) %>% slice(1)
+artist <- get_artist(track$artists[[1]]$id)
+
+```
+
+Danceability: `r head(track_features[[feature]][track_features$id == track$id], 1)`
+
+Track: [`r track$name`](`r track$external_urls.spotify`)
+
+Artist: [`r track$artists[[1]]$name`](`r track$artists[[1]]$external_urls.spotify`)
+
+Album: [`r track$album.name`](`r track$album.external_urls.spotify`)
+
+### Artist {.no-title}
+
+![](`r artist$images[2,2]`)
+
+
+### Artist {.no-title}
+
+```{r}
+track <- track_features$id[which.max(track_features[[feature]])]
+track <- my_top_tracks %>% filter(id == track) %>% slice(1)
+artist <- get_artist(track$artists[[1]]$id)
+```
+
+
+![](`r artist$images[2,2]`)
+
+### Most danceable track
+
+Danceability: `r head(track_features[[feature]][track_features$id == track$id], 1)`
+
+Track: [`r track$name`](`r track$external_urls.spotify`)
+
+Artist: [`r track$artists[[1]]$name`](`r track$artists[[1]]$external_urls.spotify`)
+
+Album: [`r track$album.name`](`r track$album.external_urls.spotify`)
+
+Row {data-height=100}
+--------------------------------------------------------------------------------
+
+### Description
+
+`r features$description[features$feature == feature]`

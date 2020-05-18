@@ -1,0 +1,1 @@
+Run `render-dashboard.R` to build yourself a dashboard.
